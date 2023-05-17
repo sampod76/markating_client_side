@@ -1,3 +1,5 @@
+const { BsThreeDotsVertical } = require("react-icons/bs");
+
 <table className="table-auto w-full text-left whitespace-no-wrap">
 <thead>
     <tr className='border-b'>

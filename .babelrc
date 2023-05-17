@@ -1,0 +1,8 @@
+{
+    "presets": [
+      ["next/babel", {
+        "swc": true
+      }]
+    ]
+  }
+  
