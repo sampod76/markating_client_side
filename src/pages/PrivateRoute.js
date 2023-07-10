@@ -2,7 +2,8 @@
 
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
-import LoginForm from '@/components/LoginForm';
+import Login from './authentication/login';
+// import LoginForm from '@/components/LoginForm';
 
 function PrivateRoute({ children }) {
   // return console.log("heljlkdjfkljdsklfjdsklj");
@@ -34,7 +35,7 @@ function PrivateRoute({ children }) {
 
   if (!isAuthenticated) {
 
-    return <LoginForm setUser={setUser} />;
+    return <Login setUser={setUser} />;
 
   }
 

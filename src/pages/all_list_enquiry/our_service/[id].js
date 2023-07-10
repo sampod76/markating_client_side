@@ -1,7 +1,7 @@
 import { useUpdateOurServiceMutation } from "@/app/features/others/othersApi";
 import { LargeSpinner, SmallSpinner } from "@/components/Spinner";
 import { Private } from "@/utils/ProtectRoute";
-import { errorToast, successToast } from "@/utils/neededFun";
+import { errorSweetAlert, errorToast, successToast } from "@/utils/neededFun";
 import axios from "axios";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
@@ -19,19 +19,21 @@ function UpdateService() {
         try {
             setIsLoading(true)
             const getCategory = async () => {
-                const result = await axios.get(`http://localhost:5000/api/v1/service_we_offer/${id}`)
-                if (result.data.success) {
+                const result = await axios.get(`${process.env.NEXT_PUBLIC_SERVER_DEV}/service_we_offer/${id}`)
+                if (result?.data?.success) {
                     setCategory(result.data.data)
                     setCategoryState(result.data.data.active)
                     setIsLoading(false)
                 } else {
                     setIsLoading(false)
+                    errorSweetAlert("sumthing is wrong")
                 }
             }
             getCategory()
         } catch (error) {
             setIsLoading(false)
             console.log(error);
+            errorSweetAlert("sumthing is wrong")
         }
     }, [id, isSuccess]);
 
@@ -54,46 +56,35 @@ function UpdateService() {
 
     return (
         <section className="max-w-[1900px] min-h-screen mx-auto p-5 ">
+            <section className="flex justify-center ">
 
-            <form onSubmit={handleSubmite} className="max-w-6xl  ">
-                <div className="space-y-12">
+            <form onSubmit={handleSubmite} className="max-w-sm border-2 bg-slate-50 drop-shadow-xl p-10 rounded-xl h-80">
+                <div className="space-y-12 ">
                     <div className="border-gray-900/10">
-                        <h2 className="text-base font-semibold leading-7 text-gray-900">
+                        <h2 className="text-2xl font-semibold leading-7 text-gray-900">
                             Service update
                         </h2>
 
                         <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
-                            <div className="sm:col-span-3 ">
+                            <div className="sm:col-span-3 space-y-4">
 
 
                                 <label
                                     htmlFor="first-name"
-                                    className="block text-sm font-medium leading-6 text-gray-900"
+                                    className="block font-medium leading-6 text-gray-900 text-lg"
                                 >
                                     Service name
                                 </label>
-                                <div className="mt-2 flex w-full">
+                                <div className="mt-2">
                                     <input
                                         defaultValue={category.name}
                                         type="text"
                                         name="name"
                                         id="first-name"
                                         autoComplete="given-name"
-                                        className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 px-1.5"
+                                        className="block  rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 px-1.5 w-80"
                                     />
-                                    <div className="w-full ">
 
-                                        {categoryState ?
-                                            <p onClick={() => {
-                                                setCategoryState(c => (!c))
-                                            }} className='px-4 w-24 mx-2 py-1.5 text-center select-none bg-green-400 font-semibold text-white rounded-md'>Active</p>
-                                            : <p onClick={() => {
-                                                setCategoryState(c => (!c))
-                                            }} className='px-4 w-24 py-1.5 mx-2 text-center select-none bg-red-400 font-semibold text-white rounded-md'>Inactive</p>
-                                        }
-
-
-                                    </div>
                                 </div>
                             </div>
 
@@ -101,15 +92,31 @@ function UpdateService() {
                     </div>
                 </div>
 
-                <div className="mt-6 flex items-center justify-start">
+                <div className="mt-4 flex items-center justify-start">
+
+                   
+
+                        {categoryState ?
+                            <p onClick={() => {
+                                setCategoryState(c => (!c))
+                            }} className='px-4 w-24 mr-2 py-1.5 text-center select-none bg-green-400 font-semibold text-white rounded-md'>Active</p>
+                            : <p onClick={() => {
+                                setCategoryState(c => (!c))
+                            }} className='px-4 w-24 py-1.5 mr-2 text-center select-none bg-red-400 font-semibold text-white rounded-md'>Inactive</p>
+                        }
+
+
+                   
                     <button
                         type="submit"
-                        className="rounded-md bg-indigo-600 px-3 py-2 w-20 text-md font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                        className="rounded-md bg-indigo-600 px-3 py-1.5 w-20 text-md font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                     >
-                        {updateLoading ? <SmallSpinner /> : <span className="">Save</span>}
+                        {updateLoading ? <SmallSpinner /> : <span className="">Update</span>}
                     </button>
                 </div>
             </form>
+            </section>
+
         </section>
     );
 }

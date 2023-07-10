@@ -85,7 +85,7 @@ const UpdateProfile = () => {
                 const result2 = await axios.post(`${process.env.NEXT_PUBLIC_SERVER_DEV}/img_upload/multipal`, formData2, {
                     headers: {
                         "Content-Type": "multipart/form-data",
-                        'Access-Control-Allow-Origin': `http://localhost:5000`,
+                        'Access-Control-Allow-Origin': process.env.NEXT_PUBLIC_SERVER_DEV,
                         'Access-Control-Allow-Credentials': 'true',
                         authorization: localStorage.getItem("tech_token"),
                     }
@@ -197,7 +197,7 @@ const UpdateProfile = () => {
                     <div className='col-span-1 h-fit  pt-8 pb-4 mdd:pb-10 bg-gray-200 border rounded-md px-0 xl:px-10'>
                         <div className='text-center'>
                             <figure className='relative'>
-                                <img className='rounded-full w-[50%] max-w-[150px] mx-auto p-[2px]' src={previewImage || userImage || demoUser} alt="" />
+                                <img className='rounded-full w-32 h-32 mx-auto p-[2px]' src={previewImage || userImage || demoUser} alt="" />
                                 <input
                                     onChange={(e) => setPreviewImage(window.URL.createObjectURL(e.target.files[0]))}
                                     onClick={() => setEditField({ ...editField, upBtn: true })}
@@ -210,8 +210,8 @@ const UpdateProfile = () => {
                             <h5 className='font-medium text-lg md:text-sm lg:text-lg mb-1 capitalize'>{fast_name + ' ' + last_name}</h5>
                             <div className=' py-2 w-fit mx-auto text-start'>
                                 <h5 className='font-semibold text-sm mb-1'>Status : {status?.active ? "Active" : "Inactive"}</h5>
-                                <h5 className='font-semibold text-sm mb-1'>User Id : {userId}</h5>
                                 <h4 className='font-semibold text-sm mb-1 capitalize'>Position: {role}</h4>
+                                <h5 className='font-semibold text-sm mb-1'>User Id : {userId}</h5>
                             </div>
                             <h5 className='text-sm mb-1'>Last updated: {new Date(updatedAt).toLocaleString()}</h5>
                         </div>

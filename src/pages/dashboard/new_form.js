@@ -85,7 +85,7 @@ const New_form = () => {
                 const result = await axios.post(`${process.env.NEXT_PUBLIC_SERVER_DEV}/img_upload`, formData, {
                     headers: {
                         "Content-Type": "multipart/form-data",
-                        'Access-Control-Allow-Origin': `http://localhost:5000`,
+                        'Access-Control-Allow-Origin': process.env.NEXT_PUBLIC_SERVER_DEV,
                         'Access-Control-Allow-Credentials': 'true',
                         authorization: localStorage.getItem("tech_token"),
                     }
@@ -322,71 +322,10 @@ const New_form = () => {
                             <div className={""} >
                                 <TagsInput
                                     className="bg-gray-400"
-                                    value={theyService} onChange={setTheyService} name="tags" placeHolder="enter products"
+                                    value={theyService} onChange={setTheyService} name="tags" placeHolder="Enter Service"
                                 />
                             </div>
                         </div>
-                        {/* <div className={`${!inputData?.isBranch ? 'h-7' : 'h-fit'} overflow-y-hidden duration-300`}>
-                            <div className="relative mb-2 grid grid-cols-1 md:grid-cols-7 gap-x-3">
-                                <div className='col-span-3'>
-                                    <input
-                                        checked={inputData?.isBranch || false}
-                                        onClick={(e) => {
-                                            setInputData({ ...inputData, isBranch: inputData?.isBranch ? false : true });
-                                            setCount(c => ({ ...c, branch: 1 }))
-                                            setBranch({})
-                                        }}
-                                        type="checkbox" id="branch"
-                                    />
-                                    <label className='ml-2 leading-7 font-[600] text-gray-700 col-span-3' htmlFor="branch">Are there any branch institutions?</label>
-                                </div>
-                                <div className='col-span-4 mt-8'>
-                                    {[...Array(count.branch)].map((site, i) => <div className='mb-2' key={i}>
-                                        <h4 className='text-sm text-gray-700 font-semibold'>Branch - {++i}</h4>
-                                        <input
-                                            value={branch[`branch${i}`]?.name || ""}
-                                            onChange={(e) => setBranch(c => ({ ...c, [`branch${i}`]: { ...c[`branch${i}`], name: e.target.value } }))}
-                                            type="text" placeholder='Branch name'
-                                            className="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 md:py-[6px] px-3 leading-8 transition-colors duration-200 ease-in-out"
-                                        />
-                                        <div className='w-full grid grid-cols-6 gap-2 justify-between items-center'>
-                                            <div className='w-full col-span-3'>
-                                                <label className="leading-7 text-gray-700 text-xs">Country *</label>
-                                                <select
-                                                    value={branch[`branch${i}`]?.country || ""}
-                                                    onChange={(e) => setBranch(c => ({ ...c, [`branch${i}`]: { ...c[`branch${i}`], country: e.target.value } }))}
-                                                    className="block w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-[10px] md:py-[11px] px-3 -mt-1 leading-8 transition-colors duration-200 ease-in-out"
-                                                >
-                                                    <option value='' selected disabled>country</option>
-                                                    {Object.values(Countries.countries).map((country, i) => (
-                                                        <option key={i} value={country.name}>{country.name}</option>
-                                                    ))}
-                                                </select>
-                                            </div>
-                                            <div className="w-full col-span-3">
-                                                <label htmlFor='branchState' className="leading-7 text-gray-700 text-xs">State / Province </label>
-                                                <input
-                                                    value={branch[`branch${i}`]?.state || ""}
-                                                    onChange={(e) => setBranch(c => ({ ...c, [`branch${i}`]: { ...c[`branch${i}`], state: e.target.value } }))}
-                                                    type="text" id='branchState' placeholder='Local state state'
-                                                    className="col-span-4 w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 md:py-[6px] px-3 -mt-1 leading-8 transition-colors duration-200 ease-in-out"
-                                                />
-                                            </div>
-                                            <div className="w-full col-span-6 -mt-1">
-                                                <label htmlFor='address' className="leading-7 text-gray-700  text-xs">Street Address</label>
-                                                <input
-                                                    value={branch[`branch${i}`]?.street_address || ""}
-                                                    onChange={(e) => setBranch(c => ({ ...c, [`branch${i}`]: { ...c[`branch${i}`], street_address: e.target.value } }))}
-                                                    type="text" id='address' placeholder='Street Address'
-                                                    className="col-span-4 w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 md:py-[6px] px-3 -mt-1 leading-8 transition-colors duration-200 ease-in-out"
-                                                />
-                                            </div>
-                                        </div>
-                                    </div>)}
-                                    <div className='flex justify-end'> <p onClick={() => setCount((c) => ({ ...c, branch: c.branch + 1 }))} className="text-white bg-red-400 border-0 h-7  whitespace-pre text-sm py-[4px] px-4 mr-2 focus:outline-none hover:bg-red-500 active:bg-red-600 rounded font-semibold select-none inline cursor-pointer">+ New Branch</p></div>
-                                </div>
-                            </div>
-                        </div> */}
                         <div className="relative mb-4 grid grid-cols-1 gap-x-3 py-2 rounded bg-slate-50 -mx-4 px-4">
                             <p className="leading-7 font-[600] text-gray-700 col-span-3">Services We can Offer *</p>
                             <div className="col-span-4 grid grid-cols-1 relative gap-x-2 gap-y-3 mt-2 max-h-[400px] overflow-y-auto">
@@ -405,11 +344,21 @@ const New_form = () => {
                             </div>
                         </div>
                         <div className={`relative mb-2 w-full`}>
-                            <label className='leading-7 font-[600] text-gray-700 col-span-3' htmlFor="">Suggestion more service</label>
-                            <div className={""} >
+                            <div className='col-span-3'>
+                                <input
+                                    checked={inputData.addNewService || false}
+                                    onClick={(e) => {
+                                        setInputData({ ...inputData, addNewService: inputData.addNewService ? false : true });
+                                        setNewSuggestService([]);
+                                    }} readOnly
+                                    type="checkbox" id=""
+                                />
+                                <label className='leading-7 ml-2 font-[600] text-gray-700 col-span-3' htmlFor="">Suggestion more service</label>
+                            </div>
+                            <div className={`${!inputData.addNewService ? 'hidden' : 'block'}`} >
                                 <TagsInput
                                     className="bg-gray-400"
-                                    value={newSuggestService} onChange={setNewSuggestService} name="tags" placeHolder="enter products"
+                                    value={newSuggestService} onChange={setNewSuggestService} name="tags" placeHolder="More service"
                                 />
                             </div>
                         </div>
@@ -429,6 +378,7 @@ const New_form = () => {
                                 localStorage.removeItem("entire");
                                 setCount({ branch: 1, website: 1 });
                                 setSelectedCountry(null);
+                                setNewSuggestService([])
                                 setSelectedState(null);
                                 setSelectedCity(null);
                                 setWebsite({});

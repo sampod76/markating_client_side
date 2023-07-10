@@ -1,5 +1,5 @@
 import Head from 'next/head'
-// import { Inter } from 'next/font/google'
+import { Inter } from 'next/font/google'
 import { useSelector } from 'react-redux'
 import HomePage from '@/components/HomePage/HomePage';
 export default function Home() {
